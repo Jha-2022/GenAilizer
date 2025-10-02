@@ -53,6 +53,7 @@ const Dashboard = () => {
       <Layout>
         <ChatInterface
           service={chatbotData[selectedService as keyof typeof chatbotData]}
+          serviceId={selectedService}
           onBack={() => setSelectedService(null)}
         />
       </Layout>

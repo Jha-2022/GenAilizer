@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ArrowLeft, Send } from "lucide-react";
+import { useToast } from "./ui/use-toast";
 
 interface Message {
   sender: "bot" | "user";
@@ -14,16 +15,19 @@ interface ChatInterfaceProps {
     welcome: string;
     responses: { [key: string]: string };
   };
+  serviceId: string;
   onBack: () => void;
 }
 
-const ChatInterface = ({ service, onBack }: ChatInterfaceProps) => {
+const ChatInterface = ({ service, serviceId, onBack }: ChatInterfaceProps) => {
+  const { toast } = useToast();
   const [messages, setMessages] = useState<Message[]>([
     { sender: "bot", text: service.welcome },
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,30 +37,128 @@ const ChatInterface = ({ service, onBack }: ChatInterfaceProps) => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const getBotResponse = (userInput: string): string => {
-    const lowerInput = userInput.toLowerCase();
-    for (const key in service.responses) {
-      if (lowerInput.includes(key)) {
-        return service.responses[key];
+  const streamChat = async (userMessage: string) => {
+    const CHAT_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/chat`;
+    
+    abortControllerRef.current = new AbortController();
+    
+    try {
+      const conversationMessages = messages
+        .filter(m => m.sender !== "bot" || m.text !== service.welcome)
+        .map(m => ({
+          role: m.sender === "user" ? "user" : "assistant",
+          content: m.text
+        }));
+
+      conversationMessages.push({
+        role: "user",
+        content: userMessage
+      });
+
+      const response = await fetch(CHAT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({ 
+          messages: conversationMessages,
+          serviceType: serviceId 
+        }),
+        signal: abortControllerRef.current.signal,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+      }
+
+      if (!response.body) throw new Error("No response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let streamDone = false;
+      let assistantContent = "";
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              assistantContent += content;
+              setMessages((prev) => {
+                const lastMessage = prev[prev.length - 1];
+                if (lastMessage?.sender === "bot" && lastMessage.text !== service.welcome) {
+                  return prev.map((m, i) => 
+                    i === prev.length - 1 ? { ...m, text: assistantContent } : m
+                  );
+                }
+                return [...prev, { sender: "bot", text: assistantContent }];
+              });
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
+
+      setIsTyping(false);
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.log('Stream aborted');
+      } else {
+        console.error("Chat error:", error);
+        setIsTyping(false);
+        toast({
+          title: "Error",
+          description: error instanceof Error ? error.message : "Failed to get response",
+          variant: "destructive",
+        });
       }
     }
-    return service.responses.default;
   };
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const handleSend = async () => {
+    if (!input.trim() || isTyping) return;
 
     const userMessage: Message = { sender: "user", text: input };
     setMessages((prev) => [...prev, userMessage]);
+    const messageText = input;
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
-      setIsTyping(false);
-      const botResponse = getBotResponse(input);
-      setMessages((prev) => [...prev, { sender: "bot", text: botResponse }]);
-    }, 1500 + Math.random() * 500);
+    await streamChat(messageText);
   };
+
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   return (
     <div className="flex flex-col h-[calc(100vh-8rem)] max-w-4xl mx-auto">
