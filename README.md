@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to AutoPrime project
 
 ## Project info
 
@@ -8,9 +8,6 @@
 
 There are several ways of editing your application.
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/c3e16cc9-3309-43f2-9de8-de2f320efd00) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
