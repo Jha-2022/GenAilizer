@@ -29,6 +29,7 @@ npm i
 npm run dev
 ```
 
+```sh
 AutoPrime1.0/
 │
 ├── public/                   # Static assets (images, favicon, etc.)
@@ -42,8 +43,7 @@ AutoPrime1.0/
 ├── tailwind.config.ts  
 ├── tsconfig.json  
 └── README.md                 # This file
-
-
+```
 
 ## What technologies are used for this project?
 
