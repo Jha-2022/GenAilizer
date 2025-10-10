@@ -29,6 +29,13 @@ npm i
 npm run dev
 ```
 
+## Features
+- Clean, minimal UI with Shadcn-UI + Tailwind  
+- Prime number / mathematical tool(s) (whatever your app does)  
+- Responsive design for mobile & desktop  
+- Fast performance, optimized build via Vite  
+- Easy to extend / customize
+
 ```sh
 AutoPrime1.0/
 │
@@ -45,6 +52,16 @@ AutoPrime1.0/
 └── README.md                 # This file
 ```
 
+## Tech Stack
+
+- **Frontend:** React, TypeScript  
+- **Styling:** Tailwind CSS, Shadcn-UI  
+- **Build Tool / Bundler:** Vite  
+- **Hosting / Deployment:** Vercel, Lovable  
+- **Others / Config:** Tailwind config, PostCSS, ESLint, etc.  
+
+
+
 ## What technologies are used for this project?
 
 This project is built with:
@@ -55,7 +72,8 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+
+
 
 Simply open [Lovable](https://lovable.dev/projects/c3e16cc9-3309-43f2-9de8-de2f320efd00) and click on Share -> Publish.
 
