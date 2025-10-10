@@ -6,7 +6,7 @@
   <img src="public/favicon.ico.png" alt="AutoPrime Logo" width="200" />
 </p>
 
-<p align="center">its a good one</p>
+<p align="right">its a good one</p>
 
 
 **URL**: https://auto-prime10.vercel.app/
