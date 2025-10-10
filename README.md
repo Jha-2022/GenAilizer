@@ -2,6 +2,11 @@
 
 ## Project info
 
+<p align="center">
+  <img src="path/to/your-logo.png" alt="AutoPrime Logo" width="200" />
+</p>
+
+
 **URL**: https://auto-prime10.vercel.app/
 
 **Use your preferred IDE and run it locally**
