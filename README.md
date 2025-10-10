@@ -4,6 +4,7 @@
 
 <p align="left">
   <img src="public/favicon.ico.png" alt="AutoPrime Logo" width="200" />
+  <p>its a good one</p>
 </p>
 
 
