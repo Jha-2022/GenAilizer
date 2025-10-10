@@ -3,6 +3,7 @@
 ## Project info
 
 **URL**: https://lovable.dev/projects/c3e16cc9-3309-43f2-9de8-de2f320efd00
+**URL 2.0**: https://auto-prime10.vercel.app/
 
 ## How can I edit this code?
 
