@@ -2,7 +2,7 @@
 
 ## Project info
 
-<p align="center">
+<p align="left">
   <img src="public/favicon.ico.png" alt="AutoPrime Logo" width="200" />
 </p>
 
