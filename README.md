@@ -2,22 +2,9 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/c3e16cc9-3309-43f2-9de8-de2f320efd00
-**URL 2.0**: https://auto-prime10.vercel.app/
+**URL**: https://auto-prime10.vercel.app/
 
-## How can I edit this code?
-
-There are several ways of editing your application.
-
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
+**Use your preferred IDE and run it locally**
 Follow these steps:
 
 ```sh
