@@ -3,7 +3,7 @@
 ## Project info
 
 <p align="center">
-  <img src="path/to/your-logo.png" alt="AutoPrime Logo" width="200" />
+  <img src="public/favicon.ico.png" alt="AutoPrime Logo" width="200" />
 </p>
 
 
