@@ -16,7 +16,7 @@ const Sidebar = () => {
       <div className="p-6 border-b border-sidebar-border">
         <Link to="/" className="flex items-center space-x-3">
           <Zap className="w-8 h-8 text-primary" />
-          <span className="text-xl font-bold text-sidebar-foreground">AutoPrime</span>
+          <span className="text-xl font-bold text-sidebar-foreground">GenAilizer</span>
         </Link>
       </div>
 

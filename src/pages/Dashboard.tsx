@@ -2,50 +2,59 @@ import { useState } from "react";
 import Layout from "@/components/Layout";
 import ServiceCard from "@/components/ServiceCard";
 import ChatInterface from "@/components/ChatInterface";
-import { UserPlus, UserCheck, FileText, Calendar, HeadphonesIcon, BarChart3 } from "lucide-react";
+import { UserPlus, UserCheck, FileText, Calendar, HeadphonesIcon, LockKeyholeOpen, BarChart3, Tv, Bitcoin, GraduationCap, Activity, Flower, Building2, BookOpenText} from "lucide-react";
 import { chatbotData } from "@/data/chatbotData";
+
+
 
 const Dashboard = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
 
   const services = [
     {
-      id: "lead-gen",
-      icon: <UserPlus className="w-6 h-6 text-primary" />,
-      title: "Lead Generation",
-      description: "Automated automotive sales outreach and qualification.",
+      id: "digital-media",
+      icon: <Tv className="w-6 h-6 text-primary"/>,
+      title: "Digital Media",
+      description: "Gen AI solutions for dynamic content personalization and viral trend prediction.",
     },
     {
-      id: "onboarding",
-      icon: <UserCheck className="w-6 h-6 text-primary" />,
-      title: "Customer Onboarding",
-      description: "Seamless telecom KYC automation and user verification.",
+      id: "fintech",
+      icon: <Bitcoin className="w-6 h-6 text-primary"/>,
+      title: "Fintech",
+      description: "Gen AI solutions for instant fraud prevention and hyper-personalized financial advice",
     },
     {
-      id: "claims",
-      icon: <FileText className="w-6 h-6 text-primary" />,
-      title: "Claims Processing",
-      description: "Insurance form filling and intelligent document validation.",
+      id: "education",
+      icon: <GraduationCap className="w-6 h-6 text-primary" />,
+      title: "Education",
+      description: "Gen AI solutions for adaptive tutoring and skill gap identification.",
     },
     {
-      id: "scheduling",
-      icon: <Calendar className="w-6 h-6 text-primary" />,
-      title: "Appointment Scheduling",
-      description: "Hospital or field service bookings managed by AI.",
+      id: "healthcare",
+      icon: <Activity className="w-6 h-6 text-primary" />,
+      title: "Healthcare",
+      description: "Gen AI solutions for predictive diagnostics and tailored treatment plans.",
     },
     {
-      id: "support",
-      icon: <HeadphonesIcon className="w-6 h-6 text-primary" />,
-      title: "Support & FAQs",
-      description: "E-commerce return queries and automated refund flows.",
+      id: "sustainarbility",
+      icon: <Flower className="w-6 h-6 text-primary" />,
+      title: "Sustainability",
+      description: "Gen AI solutions for emissions forecasting and circular economy optimization.",
     },
+
     {
-      id: "analytics",
-      icon: <BarChart3 className="w-6 h-6 text-gray-300" />,
-      title: "Advanced Analytics",
-      description: "AI-driven insights and performance tracking.",
-      comingSoon: true,
+      id: "smart-cities",
+      icon: <Building2 className="w-6 h-6 text-primary" />,
+      title: "Smart Cities",
+      description: "Gen AI solutions for real-time urban flow management and citizen safety enhancement.",
     },
+    
+    {
+      id: "open_novel_innovation",
+      icon: <BookOpenText className="w-6 h-6 text-primary" />,
+      title: "Open Novel Innovation",
+      description: "Gen AI solutions for breakthrough idea discovery and rapid collaboration."
+    }
   ];
 
   if (selectedService) {
@@ -63,7 +72,7 @@ const Dashboard = () => {
   return (
     <Layout>
       <div className="fade-in-up">
-        <h1 className="text-4xl font-bold text-foreground mb-3">Autonomous Agent Services</h1>
+        <h1 className="text-4xl font-bold text-foreground mb-3">Generative AI Soluions</h1>
         <p className="text-muted-foreground mb-8">
           Select a service to see how our AI agents can automate your processes.
         </p>
@@ -79,8 +88,8 @@ const Dashboard = () => {
                 icon={service.icon}
                 title={service.title}
                 description={service.description}
-                onClick={() => !service.comingSoon && setSelectedService(service.id)}
-                comingSoon={service.comingSoon}
+                // onClick={() => !service.comingSoon && setSelectedService(service.id)}
+                // comingSoon={service.comingSoon}
               />
             </div>
           ))}
