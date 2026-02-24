@@ -10,10 +10,9 @@
 
 
 
-**URL**: https://auto-prime10.vercel.app/
+**URL**: 
 
-**Use your preferred IDE and run it locally**
-Follow these steps:
+
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
